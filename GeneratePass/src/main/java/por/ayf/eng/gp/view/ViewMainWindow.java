@@ -3,21 +3,16 @@ package por.ayf.eng.gp.view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Toolkit;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import por.ayf.eng.gp.util.Util;
 import por.ayf.eng.gp.view.comp.ComponentViewCreator;
 
 /**
@@ -39,11 +33,7 @@ public class ViewMainWindow extends JFrame {
 	private static final long serialVersionUID = 1L;	
 	
 	private JPanel contentPane;								
-	private JMenuBar menuBar;								
-	private JMenu jmFile;								
-	private JMenuItem jmiNew;								
-	private JMenuItem jmiLoad;							
-	private JMenuItem jmiExit;								
+	private JMenuBar menuBar;															
 	private JMenu jmHelp;									
 	private JMenuItem mntmAbout;					
 	private JButton newPass;								
@@ -52,10 +42,7 @@ public class ViewMainWindow extends JFrame {
 	private JButton deletePass;								
 	private JScrollPane scrollPane;							
 	private JList<String> list;								
-	private static DefaultListModel<String> model;			
-	
-	private String url = null;											
-	private boolean load = false;						
+	private static DefaultListModel<String> model;									
 	
 	public ViewMainWindow() {
 		initComponents();
@@ -67,7 +54,7 @@ public class ViewMainWindow extends JFrame {
 
 	private void initComponents() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon.png"));
-		setTitle("SafePass");
+		setTitle("GeneratePass");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 555, 270);
 		setLocationRelativeTo(null); // Center the view.

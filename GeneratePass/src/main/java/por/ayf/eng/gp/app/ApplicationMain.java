@@ -10,7 +10,7 @@ import por.ayf.eng.gp.view.ViewMainWindow;
  *  Main class will execute the application.
  * 
  *  @author: Ángel Yagüe Flor.
- *  @version: 2.1.
+ *  @version: 1.0.
  */
 
 public class ApplicationMain {

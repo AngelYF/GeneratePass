@@ -45,7 +45,6 @@ public class Util {
 				e.printStackTrace();
 				break;
 		}
-		
 	}
 	
 	public static void showMessage(Class<?> clasz, String message, int typeMessage, Exception e) {

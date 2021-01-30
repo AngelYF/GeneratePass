@@ -25,14 +25,8 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import por.ayf.eng.sp.database.SQLManager;
-import por.ayf.eng.sp.database.SQLQuery;
-import por.ayf.eng.sp.database.bean.BeanRegistry;
 import por.ayf.eng.sp.util.Util;
-import por.ayf.eng.sp.view.comp.ComponentViewConsultPass;
-import por.ayf.eng.sp.view.comp.ComponentViewCreatePass;
 import por.ayf.eng.sp.view.comp.ComponentViewCreator;
-import por.ayf.eng.sp.view.comp.ComponentViewModifyPass;
 
 /**
  *  Class will contain the JFrame of the main window.
@@ -60,138 +54,17 @@ public class ViewMainWindow extends JFrame {
 	private JList<String> list;								
 	private static DefaultListModel<String> model;			
 	
-	private String url = null;								
-	private static SQLManager sqlManager = null;					
+	private String url = null;											
 	private boolean load = false;						
 	
 	public ViewMainWindow() {
-		sqlManager = SQLManager.getInstance();
 		initComponents();
-	}
-	
-	private void newDatabase() {	
-		url = JOptionPane.showInputDialog("¿Como se llama la base de datos?");
-	
-		// If the name is incorrect, give one by defect.
-		if(url == null || url.equals("") || url.contains(".")) {
-			url = "safepass.sqlite";
-		} else {
-			url += ".sqlite";
-		}
-		
-		try {
-			sqlManager.createDatabase(url);
-			load = true;
-		} catch (Exception e) {
-			Util.showMessage(ViewMainWindow.class, "Error al crear la base de datos.", JOptionPane.ERROR_MESSAGE, e);
-		}
-	}
-	
-	private void loadDatabase() {
-		JFileChooser jFChooser = new JFileChooser();
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter(".sqlite", "sqlite"); 
-
-		jFChooser.setFileFilter(filtro);
-		jFChooser.setAcceptAllFileFilterUsed(false);
-		jFChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		jFChooser.setMultiSelectionEnabled(false);
-	
-		int seleccion = jFChooser.showOpenDialog(contentPane);
-
-		if(seleccion == JFileChooser.APPROVE_OPTION){
-			url = jFChooser.getSelectedFile().getAbsolutePath();
-			load = true;
-			
-			try {
-				sqlManager.loadDatabase(url);
-			} catch (Exception e) {
-				Util.showMessage(ViewMainWindow.class, "Error al cargar base de datos.", JOptionPane.ERROR_MESSAGE, e);
-			}
-		}	
-		
-		refreshList();
 	}
 	
 	private void creator() {
 		new ComponentViewCreator(this, true).setVisible(true);
 	}
-	
-	private void createPass() {
-		// Check the database is active.
-		if(url != null && load) {
-			new ComponentViewCreatePass(this, true, sqlManager, load).setVisible(true);
-		} else {
-			Util.showMessage(ViewMainWindow.class, "Debe cargar la base de datos previamente.", JOptionPane.WARNING_MESSAGE, null);
-		}
-	}
-	
-	private void modifyPass() {	
-		// Check the database is active.
-		if(url != null && load) {
-			// If I'm selected a registry, then can edit.
-			if(list.getSelectedIndex() != -1) { 
-				new ComponentViewModifyPass(this, true, sqlManager, list.getSelectedValue()).setVisible(true);
-			}
-		} else {
-			Util.showMessage(ViewMainWindow.class, "Debe cargar la base de datos previamente.", JOptionPane.WARNING_MESSAGE, null);
-		}
-	}
-	
-	private void consultPass() {
-		// Check the database is active.
-		if(url != null && load) {
-			// If I'm selected a registry, then can see.
-			if(list.getSelectedIndex() != -1) { 
-				new ComponentViewConsultPass(this, true, sqlManager, list.getSelectedValue()).setVisible(true);
-			}
-		} else {
-			Util.showMessage(ViewMainWindow.class, "Debe cargar la base de datos previamente.", JOptionPane.WARNING_MESSAGE, null);
-		}
-	}
-	
-	private void deletePass() {
-		if(!load) {
-			return;
-		}
 
-		// If there are elements in the list, can delete.
-		if(model.getSize() > 0 && list.getSelectedIndex() != -1) {
-			
-			// Will generate a dialog for confirm if you desire delete the registry.
-			String respuestas[] = {"Sí", "No"}; 	// Answers
-            int opcion = JOptionPane.showOptionDialog(null,
-                    "¿Está seguro de que desea eliminar este registro?",
-                    "Eliminar registro",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    respuestas,
-                    respuestas[1]); // Option by defect.
-            
-            
-			if(opcion == 0) { // If is yes, we delete the registry.
-				// Once we have the index, we delete the element of the JList and the List of Registry.
-				SQLQuery sqlQuery = new SQLQuery();
-				sqlQuery.deleteRegistry(sqlManager, list.getSelectedValue());
-				
-				model.remove(list.getSelectedIndex());
-				refreshList();
-			}
-		}
-	}
-	
-	public static void refreshList() {
-		// Clean the list and regenerate the elements of the list.
-		model.clear();
-		
-		SQLQuery sqlQuery = new SQLQuery();
-		List<BeanRegistry> registers = sqlQuery.selectAllRegistry(sqlManager);
-		
-		for(int i = 0; i < registers.size(); i++) {
-			model.addElement(registers.get(i).getName());;
-		}
-	}
-	
 	private void initComponents() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon.png"));
 		setTitle("SafePass");
@@ -211,42 +84,10 @@ public class ViewMainWindow extends JFrame {
 		menuBar.setBounds(0, 0, 722, 21);
 		contentPane.add(menuBar);
 		
-		jmFile = new JMenu("Archivo");
-		menuBar.add(jmFile);
-		
-		jmiNew = new JMenuItem("Nuevo fichero        ");
-		jmiNew.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				newDatabase(); 
-			}
-		});
-		jmiNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.ALT_MASK));
-		jmFile.add(jmiNew);
-		
-		jmiLoad = new JMenuItem("Cargar fichero         ");
-		jmiLoad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				loadDatabase();
-			}
-		});
-		jmiLoad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK));
-		jmFile.add(jmiLoad);
-		
-		jmFile.addSeparator();
-		
-		jmiExit = new JMenuItem("Salir          ");
-		jmiExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(1);
-			}
-		});
-		jmiExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
-		jmFile.add(jmiExit);
-		
 		jmHelp = new JMenu("Ayuda");
 		menuBar.add(jmHelp);
 		
-		mntmAbout = new JMenuItem("Acerca de SafePass          ");
+		mntmAbout = new JMenuItem("Acerca de GeneratePass          ");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				creator();
@@ -261,7 +102,7 @@ public class ViewMainWindow extends JFrame {
 		newPass.setBounds(420, 32, 119, 23);
 		newPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				createPass();
+				
 			}
 		});
 		contentPane.add(newPass);
@@ -270,7 +111,7 @@ public class ViewMainWindow extends JFrame {
 		editPass.setBounds(420, 66, 119, 23);
 		editPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				modifyPass();
+				
 			}
 		});
 		contentPane.add(editPass);
@@ -279,7 +120,7 @@ public class ViewMainWindow extends JFrame {
 		consultPass.setBounds(420, 100, 119, 23);
 		consultPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				consultPass();
+				
 			}
 		});
 		contentPane.add(consultPass);
@@ -287,7 +128,7 @@ public class ViewMainWindow extends JFrame {
 		deletePass = new JButton("Eliminar");
 		deletePass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				deletePass();
+				
 			}
 		});
 		deletePass.setBounds(420, 134, 119, 23);

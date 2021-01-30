@@ -21,6 +21,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import por.ayf.eng.gp.view.comp.ComponentViewCreator;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 /**
  *  Class will contain the JFrame of the main window.
@@ -30,19 +32,17 @@ import por.ayf.eng.gp.view.comp.ComponentViewCreator;
  */
 
 public class ViewMainWindow extends JFrame {
+
 	private static final long serialVersionUID = 1L;	
 	
 	private JPanel contentPane;								
 	private JMenuBar menuBar;															
 	private JMenu jmHelp;									
 	private JMenuItem mntmAbout;					
-	private JButton newPass;								
-	private JButton editPass;								
-	private JButton consultPass;							
-	private JButton deletePass;								
-	private JScrollPane scrollPane;							
-	private JList<String> list;								
+	private JButton btnGenerate;							
+	private JButton btnCopy;								
 	private static DefaultListModel<String> model;									
+	private JTextField tfPassword;
 	
 	public ViewMainWindow() {
 		initComponents();
@@ -56,7 +56,7 @@ public class ViewMainWindow extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon.png"));
 		setTitle("GeneratePass");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 555, 270);
+		setBounds(100, 100, 300, 150);
 		setLocationRelativeTo(null); // Center the view.
 		setResizable(false);
 		
@@ -83,53 +83,35 @@ public class ViewMainWindow extends JFrame {
 		mntmAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		jmHelp.add(mntmAbout);
 		
-		// Buttons:
-		
-		newPass = new JButton("Crear");
-		newPass.setBounds(420, 32, 119, 23);
-		newPass.addActionListener(new ActionListener() {
+		btnGenerate = new JButton("Generar");
+		btnGenerate.setBounds(10, 87, 130, 23);
+		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 			}
 		});
-		contentPane.add(newPass);
+		contentPane.add(btnGenerate);
 		
-		editPass = new JButton("Editar");
-		editPass.setBounds(420, 66, 119, 23);
-		editPass.addActionListener(new ActionListener() {
+		btnCopy = new JButton("Copiar");
+		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 			}
 		});
-		contentPane.add(editPass);
+		btnCopy.setBounds(154, 87, 130, 23);
+		contentPane.add(btnCopy);
 		
-		consultPass = new JButton("Ver");
-		consultPass.setBounds(420, 100, 119, 23);
-		consultPass.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		contentPane.add(consultPass);
+		tfPassword = new JTextField();
+		tfPassword.setEnabled(false);
+		tfPassword.setBounds(10, 32, 274, 20);
+		contentPane.add(tfPassword);
+		tfPassword.setColumns(10);
 		
-		deletePass = new JButton("Eliminar");
-		deletePass.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		deletePass.setBounds(420, 134, 119, 23);
-		contentPane.add(deletePass);
+		JCheckBox cbShow = new JCheckBox("Mostrar contraseña");
+		cbShow.setBounds(10, 59, 274, 23);
+		contentPane.add(cbShow);
 		
-		// List:
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 32, 400, 200);
-		contentPane.add(scrollPane);
-		
-		model = new DefaultListModel<String>(); 
-		list = new JList<String>(model);
-		scrollPane.setViewportView(list);
+		model = new DefaultListModel<String>();
 		
 		// See the content:
 		setVisible(true);			 

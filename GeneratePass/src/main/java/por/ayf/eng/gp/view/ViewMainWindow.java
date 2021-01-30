@@ -2,11 +2,12 @@ package por.ayf.eng.gp.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -17,11 +18,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 import por.ayf.eng.gp.view.comp.ComponentViewCreator;
-import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
 /**
@@ -40,9 +38,9 @@ public class ViewMainWindow extends JFrame {
 	private JMenu jmHelp;									
 	private JMenuItem mntmAbout;					
 	private JButton btnGenerate;							
-	private JButton btnCopy;								
-	private static DefaultListModel<String> model;									
-	private JTextField tfPassword;
+	private JButton btnCopy;																
+	private JPasswordField pfPassword;
+	private JCheckBox cbShow;
 	
 	public ViewMainWindow() {
 		initComponents();
@@ -50,6 +48,27 @@ public class ViewMainWindow extends JFrame {
 	
 	private void creator() {
 		new ComponentViewCreator(this, true).setVisible(true);
+	}
+	
+	private void generatePassword() {
+		new ComponentViewCreator(this, true).setVisible(true);
+	}
+	
+	private void copyPassword() {
+		if(!(pfPassword.getPassword().length == 0)) {
+			StringSelection text = new StringSelection(new String(pfPassword.getPassword()));
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(text, null);
+		}
+	}
+	
+	private void showPassword() {
+		if(pfPassword.getEchoChar() == (char) 0) { // If is hide.
+			pfPassword.setEchoChar('*');
+			cbShow.setText("Mostrar");
+		} else {									
+			pfPassword.setEchoChar((char) 0);
+			cbShow.setText("Ocultar");
+		}
 	}
 
 	private void initComponents() {
@@ -95,23 +114,28 @@ public class ViewMainWindow extends JFrame {
 		btnCopy = new JButton("Copiar");
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				copyPassword();
 			}
 		});
 		btnCopy.setBounds(154, 87, 130, 23);
 		contentPane.add(btnCopy);
 		
-		tfPassword = new JTextField();
-		tfPassword.setEnabled(false);
-		tfPassword.setBounds(10, 32, 274, 20);
-		contentPane.add(tfPassword);
-		tfPassword.setColumns(10);
+		pfPassword = new JPasswordField();
+		pfPassword.setText("Prueba");
+		pfPassword.setEchoChar('*');
+		pfPassword.setEnabled(false);
+		pfPassword.setBounds(10, 32, 274, 20);
+		contentPane.add(pfPassword);
+		pfPassword.setColumns(10);
 		
-		JCheckBox cbShow = new JCheckBox("Mostrar contraseña");
+		cbShow = new JCheckBox("Mostrar");
 		cbShow.setBounds(10, 59, 274, 23);
+		cbShow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showPassword();
+			}
+		});
 		contentPane.add(cbShow);
-		
-		model = new DefaultListModel<String>();
 		
 		// See the content:
 		setVisible(true);			 

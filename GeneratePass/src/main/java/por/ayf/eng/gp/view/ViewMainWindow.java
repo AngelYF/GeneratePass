@@ -1,4 +1,4 @@
-package por.ayf.eng.sp.view;
+package por.ayf.eng.gp.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,8 +25,8 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import por.ayf.eng.sp.util.Util;
-import por.ayf.eng.sp.view.comp.ComponentViewCreator;
+import por.ayf.eng.gp.util.Util;
+import por.ayf.eng.gp.view.comp.ComponentViewCreator;
 
 /**
  *  Class will contain the JFrame of the main window.

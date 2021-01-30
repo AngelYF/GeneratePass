@@ -1,4 +1,4 @@
-package por.ayf.eng.sp.util;
+package por.ayf.eng.gp.util;
 
 import org.apache.log4j.Logger;
 

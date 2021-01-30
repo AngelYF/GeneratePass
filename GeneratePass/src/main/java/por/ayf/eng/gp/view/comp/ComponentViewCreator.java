@@ -1,4 +1,4 @@
-package por.ayf.eng.sp.view.comp;
+package por.ayf.eng.gp.view.comp;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -6,7 +6,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import por.ayf.eng.sp.view.ViewMainWindow;
+import por.ayf.eng.gp.view.ViewMainWindow;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;

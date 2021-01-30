@@ -1,10 +1,10 @@
-package por.ayf.eng.sp.app;
+package por.ayf.eng.gp.app;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import por.ayf.eng.sp.util.Util;
-import por.ayf.eng.sp.view.ViewMainWindow;
+import por.ayf.eng.gp.util.Util;
+import por.ayf.eng.gp.view.ViewMainWindow;
 
 /**
  *  Main class will execute the application.

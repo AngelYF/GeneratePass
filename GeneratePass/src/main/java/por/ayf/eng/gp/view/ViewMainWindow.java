@@ -20,13 +20,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
 import por.ayf.eng.gp.view.comp.ComponentViewCreator;
+import por.ayf.eng.gp.view.comp.ComponentViewGenerate;
+
 import javax.swing.JCheckBox;
 
 /**
  *  Class will contain the JFrame of the main window.
  * 
  *  @author: Ángel Yagüe Flor.
- *  @version: 2.0.
+ *  @version: 1.0.
  */
 
 public class ViewMainWindow extends JFrame {
@@ -46,12 +48,16 @@ public class ViewMainWindow extends JFrame {
 		initComponents();
 	}
 	
+	public JPasswordField getPfPassword() {
+		return pfPassword;
+	}
+	
 	private void creator() {
 		new ComponentViewCreator(this, true).setVisible(true);
 	}
 	
 	private void generatePassword() {
-		new ComponentViewCreator(this, true).setVisible(true);
+		new ComponentViewGenerate(this, true, pfPassword).setVisible(true);
 	}
 	
 	private void copyPassword() {
@@ -64,10 +70,8 @@ public class ViewMainWindow extends JFrame {
 	private void showPassword() {
 		if(pfPassword.getEchoChar() == (char) 0) { // If is hide.
 			pfPassword.setEchoChar('*');
-			cbShow.setText("Mostrar");
 		} else {									
 			pfPassword.setEchoChar((char) 0);
-			cbShow.setText("Ocultar");
 		}
 	}
 
@@ -106,7 +110,7 @@ public class ViewMainWindow extends JFrame {
 		btnGenerate.setBounds(10, 87, 130, 23);
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				generatePassword();
 			}
 		});
 		contentPane.add(btnGenerate);

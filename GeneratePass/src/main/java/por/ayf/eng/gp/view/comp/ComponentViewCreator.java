@@ -45,8 +45,6 @@ public class ComponentViewCreator extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 	
-		// Text:
-		
 		lblIcon = new JLabel("");
 		lblIcon.setIcon(new ImageIcon("src/main/resources/images/icon.png"));
 		lblIcon.setBounds(10, 11, 135, 145);
@@ -63,16 +61,14 @@ public class ComponentViewCreator extends JDialog {
 		lblVersion = new JLabel("Versión 1.0");
 		lblVersion.setBounds(155, 75, 215, 14);
 		contentPanel.add(lblVersion);
-		
-		// Buttons:
-		
+
 		btnAcept = new JButton("Aceptar");
+		btnAcept.setBounds(281, 128, 89, 23);
 		btnAcept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
-		btnAcept.setBounds(281, 128, 89, 23);
 		contentPanel.add(btnAcept);
 	}
 }

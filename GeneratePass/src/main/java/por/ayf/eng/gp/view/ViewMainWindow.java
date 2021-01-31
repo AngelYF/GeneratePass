@@ -32,17 +32,16 @@ import javax.swing.JCheckBox;
  */
 
 public class ViewMainWindow extends JFrame {
-
 	private static final long serialVersionUID = 1L;	
 	
 	private JPanel contentPane;								
 	private JMenuBar menuBar;															
 	private JMenu jmHelp;									
-	private JMenuItem mntmAbout;					
-	private JButton btnGenerate;							
-	private JButton btnCopy;																
+	private JMenuItem mntmAbout;
 	private JPasswordField pfPassword;
 	private JCheckBox cbShow;
+	private JButton btnGenerate;							
+	private JButton btnCopy;																
 	
 	public ViewMainWindow() {
 		initComponents();
@@ -87,9 +86,7 @@ public class ViewMainWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		// Menu:
-		
+
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 722, 21);
 		contentPane.add(menuBar);
@@ -98,13 +95,29 @@ public class ViewMainWindow extends JFrame {
 		menuBar.add(jmHelp);
 		
 		mntmAbout = new JMenuItem("Acerca de GeneratePass          ");
+		mntmAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				creator();
 			}
 		});
-		mntmAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		jmHelp.add(mntmAbout);
+		
+		pfPassword = new JPasswordField();
+		pfPassword.setColumns(10);
+		pfPassword.setEchoChar('*');
+		pfPassword.setEnabled(false);
+		pfPassword.setBounds(10, 32, 274, 20);
+		contentPane.add(pfPassword);
+		
+		cbShow = new JCheckBox("Mostrar");
+		cbShow.setBounds(10, 59, 274, 23);
+		cbShow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showPassword();
+			}
+		});
+		contentPane.add(cbShow);
 		
 		btnGenerate = new JButton("Generar");
 		btnGenerate.setBounds(10, 87, 130, 23);
@@ -116,30 +129,13 @@ public class ViewMainWindow extends JFrame {
 		contentPane.add(btnGenerate);
 		
 		btnCopy = new JButton("Copiar");
+		btnCopy.setBounds(154, 87, 130, 23);
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				copyPassword();
 			}
 		});
-		btnCopy.setBounds(154, 87, 130, 23);
 		contentPane.add(btnCopy);
-		
-		pfPassword = new JPasswordField();
-		pfPassword.setText("Prueba");
-		pfPassword.setEchoChar('*');
-		pfPassword.setEnabled(false);
-		pfPassword.setBounds(10, 32, 274, 20);
-		contentPane.add(pfPassword);
-		pfPassword.setColumns(10);
-		
-		cbShow = new JCheckBox("Mostrar");
-		cbShow.setBounds(10, 59, 274, 23);
-		cbShow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showPassword();
-			}
-		});
-		contentPane.add(cbShow);
 		
 		// See the content:
 		setVisible(true);			 

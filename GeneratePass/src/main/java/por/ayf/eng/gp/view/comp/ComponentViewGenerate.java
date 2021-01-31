@@ -20,7 +20,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 /**
- *  JDialog with info about me.
+ *  JDialog generate a new password with different settings.
  * 
  *  @author: Ángel Yagüe Flor.
  *  @version: 1.0.
@@ -29,15 +29,16 @@ import javax.swing.JTextField;
 public class ComponentViewGenerate extends JDialog {
 	private static final long serialVersionUID = 1L; 	
 
+	private JPasswordField pfPassword;
 	private final JPanel contentPanel = new JPanel(); 	
-	private JLabel lblOptionsText;	
-	private JLabel lblNumber;
-	private JButton btnGenerate;							
+	
+	private JLabel lblOptionsText;							
 	private JCheckBox cbMayus;
 	private JCheckBox cbSpecial;
 	private JCheckBox cbNumber;
+	private JLabel lblNumber;
 	private JTextField tfNumber;
-	private JPasswordField pfPassword;
+	private JButton btnGenerate;
 	
 	private String characters = "abcdefghijklmnopqrstuvwxyz";
 	private String mayusCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -50,7 +51,7 @@ public class ComponentViewGenerate extends JDialog {
 		initComponents();
 	}
 	
-	private void generatePassword() {
+	private void generate() {
 		int size = 0;
 		
 		try {
@@ -60,6 +61,11 @@ public class ComponentViewGenerate extends JDialog {
 			return;
 		}
 		
+		manageSettings();
+		buildPassword(size);
+	}
+	
+	private void manageSettings() {
 		if(cbMayus.isSelected()) {
 			characters += mayusCharacters;
 		}
@@ -71,7 +77,9 @@ public class ComponentViewGenerate extends JDialog {
 		if(cbNumber.isSelected()) {
 			characters += numberCharacters;
 		}
-		
+	}
+	
+	private void buildPassword(int size) {
 		String password = "";
 		Random randomGenerator = new Random();
 		
@@ -91,47 +99,45 @@ public class ComponentViewGenerate extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
 	
-		// Buttons:
-		
-		btnGenerate = new JButton("Generar");
-		btnGenerate.setBounds(11, 187, 222, 23);
-		btnGenerate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				generatePassword();
-				dispose();
-			}
-		});
+		lblOptionsText = new JLabel("Opciones de generación");
+		lblOptionsText.setBounds(11, 11, 222, 19);
+		lblOptionsText.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPanel.add(lblOptionsText);
 		
 		cbMayus = new JCheckBox("Mayúsculas");
 		cbMayus.setBounds(11, 40, 222, 23);
 		cbMayus.setHorizontalAlignment(SwingConstants.LEFT);
+		contentPanel.add(cbMayus);
 		
 		cbSpecial = new JCheckBox("Caracteres especiales");
 		cbSpecial.setBounds(11, 66, 222, 23);
 		cbSpecial.setHorizontalAlignment(SwingConstants.LEFT);
+		contentPanel.add(cbSpecial);
 		
 		cbNumber = new JCheckBox("Números");
 		cbNumber.setBounds(11, 92, 222, 23);
 		cbNumber.setHorizontalAlignment(SwingConstants.LEFT);
-		contentPanel.setLayout(null);
-		
-		lblOptionsText = new JLabel("Opciones de generación");
-		lblOptionsText.setBounds(11, 11, 222, 19);
-		contentPanel.add(lblOptionsText);
-		lblOptionsText.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPanel.add(btnGenerate);
-		contentPanel.add(cbMayus);
-		contentPanel.add(cbSpecial);
 		contentPanel.add(cbNumber);
 		
 		lblNumber = new JLabel("Número de caracteres:");
 		lblNumber.setBounds(11, 122, 222, 14);
 		contentPanel.add(lblNumber);
-		
+
 		tfNumber = new JTextField();
 		tfNumber.setBounds(11, 147, 222, 20);
-		contentPanel.add(tfNumber);
 		tfNumber.setColumns(10);
+		contentPanel.add(tfNumber);
+		
+		btnGenerate = new JButton("Generar");
+		btnGenerate.setBounds(11, 187, 222, 23);
+		btnGenerate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				generate();
+				dispose();
+			}
+		});
+		contentPanel.add(btnGenerate);	
 	}
 }

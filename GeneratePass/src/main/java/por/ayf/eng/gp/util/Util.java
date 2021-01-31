@@ -67,6 +67,7 @@ public class Util {
 						message,
 						"Advertencia", 
 						JOptionPane.WARNING_MESSAGE);
+				break;
 			case 3:	// QUESTION
 				JOptionPane.showMessageDialog(null,
 						message,

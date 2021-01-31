@@ -56,6 +56,10 @@ public class ComponentViewGenerate extends JDialog {
 		
 		try {
 			size = Integer.parseInt(tfNumber.getText());
+			
+			if(size >= 50) {
+				size = 50;
+			}
 		} catch(NumberFormatException e) {
 			Util.showMessage(ComponentViewGenerate.class, "Ha ocurrido un error. Debe introducir un número para el tamaño de la contraseña.", JOptionPane.ERROR_MESSAGE, e);
 			return;

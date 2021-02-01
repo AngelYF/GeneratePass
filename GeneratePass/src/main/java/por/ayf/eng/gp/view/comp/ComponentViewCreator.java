@@ -46,7 +46,7 @@ public class ComponentViewCreator extends JDialog {
 		contentPanel.setLayout(null);
 	
 		lblIcon = new JLabel("");
-		lblIcon.setIcon(new ImageIcon("src/main/resources/images/icon.png"));
+		lblIcon.setIcon(new ImageIcon(ComponentViewCreator.class.getResource("/images/icon.png")));
 		lblIcon.setBounds(10, 11, 135, 145);
 		contentPanel.add(lblIcon);
 		

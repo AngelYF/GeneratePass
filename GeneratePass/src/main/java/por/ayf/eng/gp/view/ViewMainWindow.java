@@ -75,7 +75,7 @@ public class ViewMainWindow extends JFrame {
 	}
 
 	private void initComponents() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/icon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewMainWindow.class.getResource("/images/icon.png")));
 		setTitle("GeneratePass");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 150);

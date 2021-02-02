@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>GeneratePass</groupId>
 	<artifactId>GeneratePass</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 	<repositories>
 		<repository>
 			<id>maven-central</id>
@@ -13,6 +13,7 @@
 		</repository>
 	</repositories>
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -22,6 +23,17 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>3.0.2</version>
+		        <configuration>
+		            <archive>
+		                <manifest>
+		                    <mainClass>por.ayf.eng.gp.app.ApplicationMain</mainClass>
+		                </manifest>
+		            </archive>
+		        </configuration>
+		    </plugin>
 		</plugins>
 	</build>
 	<dependencies>

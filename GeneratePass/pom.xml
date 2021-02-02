@@ -4,7 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>GeneratePass</groupId>
 	<artifactId>GeneratePass</artifactId>
-	<version>1.0.9</version>
+	<version>1.0.10</version>
+	<properties>
+        <project.java.version>1.8</project.java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 	<repositories>
 		<repository>
 			<id>maven-central</id>
